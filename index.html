@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>باقي | Baqi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --primary-color: #2563eb; /* أزرق عصري */
+            --text-color: #1e293b;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: -1px;
+        }
+
+        /* حاوية البطاقات */
+        .container {
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* تصميم البطاقة الذكية */
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        /* أنيميشن الأرقام */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .unit span {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        /* حركة انزلاق الأرقام */
+        .animate-pop {
+            animation: pop 0.5s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* زر التحويل */
+        .toggle-btn {
+            margin-top: 20px;
+            background: #e2e8f0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .toggle-btn:hover { background: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">باقي.</div>
+        <p>مواعيدك بدقة، بتصميم حديث.</p>
+    </header>
+
+    <div class="container">
+        <div class="card animate-pop">
+            <div class="card-title">باقي على راتب أبريل 2026</div>
+            <div class="countdown" id="timer">
+                <div class="unit"><div id="days">00</div><span>يوم</span></div>
+                <div class="unit"><div id="hours">00</div><span>ساعة</span></div>
+                <div class="unit"><div id="mins">00</div><span>دقيقة</span></div>
+            </div>
+            <button class="toggle-btn" onclick="toggleCalendar()">تحويل إلى هجري</button>
+        </div>
+    </div>
+
+    <script>
+        // دالة العد التنازلي
+        function updateTimer() {
+            const targetDate = new Date("April 27, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("days").innerText = d;
+            document.getElementById("hours").innerText = h;
+            document.getElementById("mins").innerText = m;
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function toggleCalendar() {
+            alert("سيتم تفعيل التحويل التلقائي لتقويم أم القرى في النسخة الكاملة!");
+        }
+    </script>
+</body>
+</html>
