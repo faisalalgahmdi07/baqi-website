@@ -3,156 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>باقي | Baqi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <title>باقي. | مواعيدك بدقة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-color: #f8fafc;
+            --primary: #2563eb;
+            --bg: #f3f4f6;
             --card-bg: #ffffff;
-            --primary-color: #2563eb; /* أزرق عصري */
-            --text-color: #1e293b;
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --accent: #10b981; /* للأمور المالية */
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
             margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
         header {
-            margin: 40px 0;
+            width: 100%;
+            padding: 40px 0;
             text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .logo {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: -1px;
+            color: var(--primary);
+            margin: 0;
         }
 
-        /* حاوية البطاقات */
-        .container {
+        .subtitle {
+            color: var(--text-sub);
+            margin-top: 5px;
+        }
+
+        .main-container {
             width: 90%;
-            max-width: 600px;
+            max-width: 800px;
+            padding: 20px 0;
         }
 
-        /* تصميم البطاقة الذكية */
+        /* مساحة إعلانية علوية ميتة */
+        .ad-space {
+            width: 100%;
+            height: 90px;
+            background: #e5e7eb;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* تصميم البطاقة */
         .card {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.02);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .card-title {
-            font-size: 1.2rem;
-            color: #64748b;
-            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
-        /* أنيميشن الأرقام */
-        .countdown {
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        /* العداد */
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .timer-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* الفوتر (المهم لأدسينس) */
+        footer {
+            margin-top: auto;
+            padding: 40px 0;
+            width: 100%;
+            text-align: center;
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            gap: 20px;
+            margin-bottom: 10px;
         }
 
-        .unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .footer-links a {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.9rem;
         }
 
-        .unit span {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            font-weight: 400;
-        }
+        .footer-links a:hover { color: var(--primary); }
 
-        /* حركة انزلاق الأرقام */
-        .animate-pop {
-            animation: pop 0.5s ease-out;
-        }
-
-        @keyframes pop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* زر التحويل */
-        .toggle-btn {
-            margin-top: 20px;
-            background: #e2e8f0;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.3s;
-        }
-
-        .toggle-btn:hover { background: #cbd5e1; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">باقي.</div>
-        <p>مواعيدك بدقة، بتصميم حديث.</p>
+        <h1 class="logo">باقي.</h1>
+        <p class="subtitle">كل مواعيد السعودية في مكان واحد</p>
     </header>
 
-    <div class="container">
-        <div class="card animate-pop">
-            <div class="card-title">باقي على راتب أبريل 2026</div>
-            <div class="countdown" id="timer">
-                <div class="unit"><div id="days">00</div><span>يوم</span></div>
-                <div class="unit"><div id="hours">00</div><span>ساعة</span></div>
-                <div class="unit"><div id="mins">00</div><span>دقيقة</span></div>
+    <div class="main-container">
+        
+        <div class="ad-space">مساحة إعلانية</div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">رواتب الموظفين (أبريل)</span>
+                <span class="tag">مالية</span>
             </div>
-            <button class="toggle-btn" onclick="toggleCalendar()">تحويل إلى هجري</button>
+            <div class="timer-grid" id="salary-timer">
+                <div class="timer-item"><span class="number" id="s-days">00</span><span class="label">يوم</span></div>
+                <div class="timer-item"><span class="number" id="s-hours">00</span><span class="label">ساعة</span></div>
+                <div class="timer-item"><span class="number" id="s-mins">00</span><span class="label">دقيقة</span></div>
+            </div>
         </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">إيداع حساب المواطن</span>
+                <span class="tag" style="background:#ecfdf5; color:#10b981;">دعم</span>
+            </div>
+            <div class="timer-grid" id="citizen-timer">
+                <div class="timer-item"><span class="number" id="c-days">00</span><span class="label">يوم</span></div>
+                <div class="timer-item"><span class="number" id="c-hours">00</span><span class="label">ساعة</span></div>
+                <div class="timer-item"><span class="number" id="c-mins">00</span><span class="label">دقيقة</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">إجازة عيد الأضحى 1447هـ</span>
+                <span class="tag" style="background:#fff7ed; color:#f97316;">إجازات</span>
+            </div>
+            <div class="timer-grid">
+                <div class="timer-item"><span class="number" id="e-days">--</span><span class="label">يوم</span></div>
+                <div class="timer-item"><span class="number" id="e-hours">--</span><span class="label">ساعة</span></div>
+                <div class="timer-item"><span class="number" id="e-mins">--</span><span class="label">دقيقة</span></div>
+            </div>
+        </div>
+
+        <div class="ad-space">مساحة إعلانية</div>
+
     </div>
 
+    <footer>
+        <div class="footer-links">
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">من نحن</a>
+            <a href="#">اتصل بنا</a>
+        </div>
+        <p style="font-size: 0.8rem; color: #9ca3af;">جميع المواعيد تُحدث تلقائياً بناءً على التقاويم الرسمية.</p>
+    </footer>
+
     <script>
-        // دالة العد التنازلي
-        function updateTimer() {
-            const targetDate = new Date("April 27, 2026 00:00:00").getTime();
-            const now = new Date().getTime();
-            const diff = targetDate - now;
+        function startTimer(idPrefix, targetDate) {
+            function update() {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
 
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                if (diff < 0) return;
 
-            document.getElementById("days").innerText = d;
-            document.getElementById("hours").innerText = h;
-            document.getElementById("mins").innerText = m;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById(idPrefix + 'days').innerText = d;
+                document.getElementById(idPrefix + 'hours').innerText = h;
+                document.getElementById(idPrefix + 'mins').innerText = m;
+            }
+            setInterval(update, 1000);
+            update();
         }
 
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        function toggleCalendar() {
-            alert("سيتم تفعيل التحويل التلقائي لتقويم أم القرى في النسخة الكاملة!");
-        }
+        // تواريخ تقريبية للعد التنازلي
+        startTimer('s-', new Date("April 27, 2026 00:00:00").getTime()); // راتب أبريل
+        startTimer('c-', new Date("April 10, 2026 00:00:00").getTime()); // حساب المواطن
+        startTimer('e-', new Date("May 27, 2026 00:00:00").getTime());  // عيد الأضحى تقريبي
     </script>
 </body>
 </html>
