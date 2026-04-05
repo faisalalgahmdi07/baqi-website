@@ -4,60 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>باقي. | دليل مواعيد الرواتب والإجازات في السعودية</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --primary: #2563eb; --sub: #6b7280; --accent: #10b981;
-        }
-        .dark-theme {
-            --bg: #111827; --card: #1f2937; --text: #f9fafb; --primary: #60a5fa; --sub: #9ca3af;
-        }
+        :root { --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --primary: #2563eb; --sub: #6b7280; --accent: #10b981; }
+        .dark-theme { --bg: #111827; --card: #1f2937; --text: #f9fafb; --primary: #60a5fa; --sub: #9ca3af; }
         body { font-family: 'IBM Plex Sans Arabic', sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; padding-bottom: 50px; }
-        
-        /* التنسيق العلوي */
         header { text-align: center; padding: 30px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05); background: var(--card); }
         .controls { position: absolute; left: 20px; top: 25px; display: flex; gap: 8px; }
-        button { cursor: pointer; border: none; padding: 8px 12px; border-radius: 10px; font-family: inherit; font-size: 0.75rem; background: var(--bg); color: var(--text); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-
+        button { cursor: pointer; border: none; padding: 8px 12px; border-radius: 10px; font-family: inherit; font-size: 0.75rem; background: var(--bg); color: var(--text); box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: 0.2s; }
         .container { width: 92%; max-width: 650px; margin: 20px auto; display: flex; flex-direction: column; gap: 15px; }
-
-        /* تصميم البطاقات */
-        .card { background: var(--card); border-radius: 20px; padding: 20px; position: relative; transition: 0.3s; border: 1px solid rgba(0,0,0,0.05); }
+        .card { background: var(--card); border-radius: 20px; padding: 20px; position: relative; transition: 0.3s; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         .card.pinned { border: 2px solid var(--primary); order: -1; }
         .pin-btn { position: absolute; top: 18px; left: 18px; font-size: 1.1rem; cursor: pointer; opacity: 0.3; }
         .card.pinned .pin-btn { opacity: 1; filter: grayscale(0); }
-
         .tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 8px; background: rgba(37, 99, 235, 0.1); color: var(--primary); font-weight: 600; margin-bottom: 8px; display: inline-block; }
-        .card-title { font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 4px; }
+        .card-title { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
         .date-display { font-size: 0.8rem; color: var(--sub); margin-bottom: 15px; display: block; }
-
         .timer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
         .unit { background: rgba(0,0,0,0.02); padding: 10px; border-radius: 12px; }
-        .num { font-size: 1.7rem; font-weight: 700; color: var(--primary); display: block; }
+        .num { font-size: 1.6rem; font-weight: 700; color: var(--primary); display: block; }
         .label { font-size: 0.7rem; color: var(--sub); }
-
         .card-actions { margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.03); }
         .cal-link { font-size: 0.75rem; color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer; }
-
-        /* مساحات إعلانية ميتة */
-        .ad-space { width: 100%; height: 80px; background: rgba(0,0,0,0.02); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--sub); margin: 10px 0; border: 1px dashed rgba(0,0,0,0.1); }
-
+        .ad-space { width: 100%; height: 80px; background: rgba(0,0,0,0.03); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--sub); margin: 10px 0; border: 1px dashed rgba(0,0,0,0.1); }
         footer { margin-top: 50px; text-align: center; padding: 30px; border-top: 1px solid rgba(0,0,0,0.05); background: var(--card); }
         .footer-links a { color: var(--sub); text-decoration: none; margin: 0 10px; font-size: 0.85rem; }
-        .footer-links a:hover { color: var(--primary); }
     </style>
 </head>
 <body>
 
 <header>
     <div class="controls">
-        <button onclick="toggleDark()" title="تغيير الوضع">🌙</button>
+        <button onclick="toggleDark()">🌙</button>
         <button onclick="toggleCalendarType()" id="calTypeBtn">📅 هجري</button>
     </div>
     <h1 style="color:var(--primary); margin:0;">باقي.</h1>
-    <p style="color:var(--sub); font-size: 0.8rem;">دليل مواعيد الرواتب والفعاليات السعودية</p>
+    <p style="color:var(--sub); font-size: 0.8rem;">كل مواعيد السعودية في مكان واحد</p>
 </header>
 
 <div class="container" id="mainContainer">
@@ -65,53 +47,78 @@
 
     <div class="card" id="c-salary">
         <span class="pin-btn" onclick="togglePin('c-salary')">📍</span>
-        <span class="tag">مالية</span>
-        <span class="card-title">رواتب الموظفين (أبريل)</span>
+        <span class="tag">مالية</span><span class="card-title">رواتب الموظفين (أبريل)</span>
         <span class="date-display" data-h="10 ذو القعدة" data-m="27 April">10 ذو القعدة</span>
-        <div class="timer-grid">
-            <div class="unit"><span class="num" id="s-d">0</span><span class="label">يوم</span></div>
-            <div class="unit"><span class="num" id="s-h">0</span><span class="label">ساعة</span></div>
-            <div class="unit"><span class="num" id="s-m">0</span><span class="label">دقيقة</span></div>
-        </div>
-        <div class="card-actions"><span class="cal-link" onclick="addToCal('راتب الموظفين', '20260427')">🗓 أضف للتقويم</span></div>
+        <div class="timer-grid"><div class="unit"><span class="num" id="s-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="s-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="s-m">0</span><span class="label">دقيقة</span></div></div>
+        <div class="card-actions"><span class="cal-link" onclick="addToCal('راتب أبريل', '20260427')">🗓 أضف للتقويم</span></div>
     </div>
 
     <div class="card" id="c-citizen">
         <span class="pin-btn" onclick="togglePin('c-citizen')">📍</span>
-        <span class="tag" style="background:rgba(16,185,129,0.1); color:var(--accent);">دعم</span>
-        <span class="card-title">حساب المواطن</span>
+        <span class="tag" style="background:rgba(16,185,129,0.1); color:var(--accent);">دعم</span><span class="card-title">حساب المواطن</span>
         <span class="date-display" data-h="23 شوال" data-m="10 April">23 شوال</span>
-        <div class="timer-grid">
-            <div class="unit"><span class="num" id="c-d">0</span><span class="label">يوم</span></div>
-            <div class="unit"><span class="num" id="c-h">0</span><span class="label">ساعة</span></div>
-            <div class="unit"><span class="num" id="c-m">0</span><span class="label">دقيقة</span></div>
-        </div>
+        <div class="timer-grid"><div class="unit"><span class="num" id="c-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="c-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="c-m">0</span><span class="label">دقيقة</span></div></div>
         <div class="card-actions"><span class="cal-link" onclick="addToCal('حساب المواطن', '20260410')">🗓 أضف للتقويم</span></div>
+    </div>
+
+    <div class="card" id="c-uni">
+        <span class="pin-btn" onclick="togglePin('c-uni')">📍</span>
+        <span class="tag">تعليم</span><span class="card-title">مكافأة الطلاب الجامعيين</span>
+        <span class="date-display" data-h="09 شوال" data-m="26 April">09 شوال</span>
+        <div class="timer-grid"><div class="unit"><span class="num" id="u-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="u-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="u-m">0</span><span class="label">دقيقة</span></div></div>
+        <div class="card-actions"><span class="cal-link" onclick="addToCal('مكافأة الطلاب', '20260426')">🗓 أضف للتقويم</span></div>
     </div>
 
     <div class="card" id="c-found">
         <span class="pin-btn" onclick="togglePin('c-found')">📍</span>
-        <span class="tag" style="background:#fef3c7; color:#b45309;">وطنية</span>
-        <span class="card-title">يوم التأسيس السعودي</span>
+        <span class="tag" style="background:#fef3c7; color:#b45309;">وطنية</span><span class="card-title">يوم التأسيس السعودي</span>
         <span class="date-display" data-h="15 شعبان" data-m="22 February">15 شعبان</span>
-        <div class="timer-grid">
-            <div class="unit"><span class="num" id="f-d">0</span><span class="label">يوم</span></div>
-            <div class="unit"><span class="num" id="f-h">0</span><span class="label">ساعة</span></div>
-            <div class="unit"><span class="num" id="f-m">0</span><span class="label">دقيقة</span></div>
-        </div>
+        <div class="timer-grid"><div class="unit"><span class="num" id="f-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="f-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="f-m">0</span><span class="label">دقيقة</span></div></div>
         <div class="card-actions"><span class="cal-link" onclick="addToCal('يوم التأسيس', '20270222')">🗓 أضف للتقويم</span></div>
+    </div>
+
+    <div class="card" id="c-ramadan">
+        <span class="pin-btn" onclick="togglePin('c-ramadan')">📍</span>
+        <span class="tag" style="background:#ede9fe; color:#6d28d9;">دينية</span><span class="card-title">بداية شهر رمضان 1448هـ</span>
+        <span class="date-display" data-h="01 رمضان" data-m="07 February">01 رمضان</span>
+        <div class="timer-grid"><div class="unit"><span class="num" id="r-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="r-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="r-m">0</span><span class="label">دقيقة</span></div></div>
+    </div>
+
+    <div class="card" id="c-fetr">
+        <span class="pin-btn" onclick="togglePin('c-fetr')">📍</span>
+        <span class="tag" style="background:#dcfce7; color:#15803d;">إجازات</span><span class="card-title">إجازة عيد الفطر 1448هـ</span>
+        <span class="date-display" data-h="01 شوال" data-m="09 March">01 شوال</span>
+        <div class="timer-grid"><div class="unit"><span class="num" id="ft-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="ft-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="ft-m">0</span><span class="label">دقيقة</span></div></div>
+    </div>
+
+    <div class="card" id="c-adha">
+        <span class="pin-btn" onclick="togglePin('c-adha')">📍</span>
+        <span class="tag" style="background:rgba(249,115,22,0.1); color:#f97316;">إجازات</span><span class="card-title">إجازة عيد الأضحى 1447هـ</span>
+        <span class="date-display" data-h="10 ذو الحجة" data-m="27 May">10 ذو الحجة</span>
+        <div class="timer-grid"><div class="unit"><span class="num" id="ad-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="ad-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="ad-m">0</span><span class="label">دقيقة</span></div></div>
+    </div>
+
+    <div class="card" id="c-national">
+        <span class="pin-btn" onclick="togglePin('c-national')">📍</span>
+        <span class="tag" style="background:rgba(5,150,105,0.1); color:#059669;">وطنية</span><span class="card-title">اليوم الوطني السعودي 96</span>
+        <span class="date-display" data-h="11 ربيع الأول" data-m="23 September">11 ربيع الأول</span>
+        <div class="timer-grid"><div class="unit"><span class="num" id="n-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="n-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="n-m">0</span><span class="label">دقيقة</span></div></div>
+        <div class="card-actions"><span class="cal-link" onclick="addToCal('اليوم الوطني', '20260923')">🗓 أضف للتقويم</span></div>
+    </div>
+
+    <div class="card" id="c-vac">
+        <span class="pin-btn" onclick="togglePin('c-vac')">📍</span>
+        <span class="tag">تعليم</span><span class="card-title">أقرب إجازة مطولة</span>
+        <span class="date-display" data-h="16 ذو القعدة" data-m="02 May">16 ذو القعدة</span>
+        <div class="timer-grid"><div class="unit"><span class="num" id="v-d">0</span><span class="label">يوم</span></div><div class="unit"><span class="num" id="v-h">0</span><span class="label">ساعة</span></div><div class="unit"><span class="num" id="v-m">0</span><span class="label">دقيقة</span></div></div>
     </div>
 
     <div class="ad-space">مساحة إعلانية</div>
 </div>
 
 <footer>
-    <div class="footer-links">
-        <a href="privacy.html">سياسة الخصوصية</a>
-        <a href="#">من نحن</a>
-        <a href="#">اتصل بنا</a>
-    </div>
-    <p>© 2026 باقي. | جميع الحقوق محفوظة</p>
+    <div class="footer-links"><a href="privacy.html">سياسة الخصوصية</a><a href="#">من نحن</a><a href="#">اتصل بنا</a></div>
+    <p>© 2026 باقي. | جميع المواعيد حسب تقويم أم القرى</p>
 </footer>
 
 <script>
@@ -120,9 +127,7 @@
     function toggleCalendarType() {
         isHijri = !isHijri;
         document.getElementById('calTypeBtn').innerText = isHijri ? "📅 هجري" : "📅 ميلادي";
-        document.querySelectorAll('.date-display').forEach(el => {
-            el.innerText = isHijri ? el.dataset.h : el.dataset.m;
-        });
+        document.querySelectorAll('.date-display').forEach(el => { el.innerText = isHijri ? el.dataset.h : el.dataset.m; });
     }
     function togglePin(id) { document.getElementById(id).classList.toggle('pinned'); }
     function addToCal(t, d) {
@@ -132,17 +137,15 @@
     function start(id, date) {
         const t = new Date(date).getTime();
         setInterval(() => {
-            const now = new Date().getTime();
-            const diff = t - now;
-            if (diff < 0) return;
+            const now = new Date().getTime(); const diff = t - now; if (diff < 0) return;
             document.getElementById(id+'-d').innerText = Math.floor(diff/86400000);
             document.getElementById(id+'-h').innerText = Math.floor((diff%86400000)/3600000);
             document.getElementById(id+'-m').innerText = Math.floor((diff%3600000)/60000);
         }, 1000);
     }
-    start('s', '2026-04-27T00:00:00');
-    start('c', '2026-04-10T00:00:00');
-    start('f', '2027-02-22T00:00:00');
+    start('s', '2026-04-27T00:00:00'); start('c', '2026-04-10T00:00:00'); start('u', '2026-04-26T00:00:00');
+    start('f', '2027-02-22T00:00:00'); start('r', '2027-02-07T00:00:00'); start('ft', '2027-03-09T00:00:00');
+    start('ad', '2026-05-27T00:00:00'); start('n', '2026-09-23T00:00:00'); start('v', '2026-05-02T00:00:00');
 </script>
 </body>
 </html>
