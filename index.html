@@ -7,30 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --primary: #2563eb; --sub: #6b7280;
+            --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --primary: #2563eb; --sub: #6b7280; --accent: #10b981;
         }
         .dark-theme {
             --bg: #111827; --card: #1f2937; --text: #f9fafb; --primary: #60a5fa; --sub: #9ca3af;
         }
         body { font-family: 'IBM Plex Sans Arabic', sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; padding-bottom: 50px; }
-        header { text-align: center; padding: 30px; position: relative; }
-        .controls { position: absolute; left: 20px; top: 20px; display: flex; gap: 10px; }
-        button { cursor: pointer; border: none; padding: 8px 15px; border-radius: 10px; font-family: inherit; font-size: 0.8rem; background: var(--card); color: var(--text); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        header { text-align: center; padding: 30px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.05); background: var(--card); }
+        .controls { position: absolute; left: 20px; top: 25px; display: flex; gap: 8px; }
+        button { cursor: pointer; border: none; padding: 8px 12px; border-radius: 10px; font-family: inherit; font-size: 0.75rem; background: var(--bg); color: var(--text); box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: 0.2s; }
+        button:hover { transform: scale(1.05); }
         
-        .container { width: 90%; max-width: 700px; margin: auto; display: flex; flex-direction: column; gap: 20px; }
-        .card { background: var(--card); border-radius: 20px; padding: 20px; position: relative; transition: 0.3s; border: 1px solid transparent; }
+        .container { width: 92%; max-width: 650px; margin: 20px auto; display: flex; flex-direction: column; gap: 15px; }
+        
+        .card { background: var(--card); border-radius: 20px; padding: 20px; position: relative; transition: 0.3s; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         .card.pinned { border: 2px solid var(--primary); order: -1; }
-        .pin-btn { position: absolute; top: 15px; left: 15px; font-size: 1.2rem; cursor: pointer; filter: grayscale(1); }
-        .card.pinned .pin-btn { filter: grayscale(0); }
+        .pin-btn { position: absolute; top: 18px; left: 18px; font-size: 1.1rem; cursor: pointer; filter: grayscale(1); opacity: 0.3; transition: 0.3s; }
+        .card:hover .pin-btn { opacity: 1; }
+        .card.pinned .pin-btn { filter: grayscale(0); opacity: 1; }
 
-        .timer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; text-align: center; }
-        .num { font-size: 1.8rem; font-weight: 700; color: var(--primary); display: block; }
-        .label { font-size: 0.75rem; color: var(--sub); }
+        .tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 8px; background: rgba(37, 99, 235, 0.1); color: var(--primary); font-weight: 600; margin-bottom: 8px; display: inline-block; }
+        .card-title { font-weight: 700; font-size: 1.05rem; display: block; margin-bottom: 4px; }
+        .date-display { font-size: 0.8rem; color: var(--sub); margin-bottom: 15px; display: block; }
 
-        .card-actions { margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
-        .cal-link { font-size: 0.7rem; color: var(--primary); text-decoration: none; border: 1px solid var(--primary); padding: 4px 8px; border-radius: 8px; }
-        
-        footer { margin-top: 40px; text-align: center; font-size: 0.8rem; color: var(--sub); }
+        .timer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
+        .unit { background: rgba(0,0,0,0.02); padding: 10px; border-radius: 12px; }
+        .num { font-size: 1.6rem; font-weight: 700; color: var(--primary); display: block; }
+        .label { font-size: 0.7rem; color: var(--sub); }
+
+        .card-actions { margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.03); display: flex; gap: 10px; }
+        .cal-link { font-size: 0.75rem; color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        .ad-placeholder { width: 100%; height: 80px; background: rgba(0,0,0,0.03); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--sub); margin: 10px 0; border: 1px dashed rgba(0,0,0,0.1); }
+
+        footer { margin-top: 50px; text-align: center; padding: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .footer-links a { color: var(--sub); text-decoration: none; margin: 0 10px; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -38,102 +49,128 @@
 <header>
     <div class="controls">
         <button onclick="toggleDark()">🌙</button>
-        <button onclick="toggleCalendarType()" id="calTypeBtn">تحويل للميلادي</button>
+        <button onclick="toggleCalendarType()" id="calTypeBtn">📅 هجري</button>
     </div>
-    <h1 style="color:var(--primary); margin:0;">باقي.</h1>
-    <p style="color:var(--sub);">مواعيدك في جيبك</p>
+    <h1 style="color:var(--primary); margin:0; font-size: 2rem;">باقي.</h1>
+    <p style="color:var(--sub); font-size: 0.9rem; margin: 5px 0 0 0;">دليل المواعيد السعودية</p>
 </header>
 
 <div class="container" id="mainContainer">
-    <div class="card" id="card-salary">
-        <span class="pin-btn" onclick="togglePin('card-salary')">📍</span>
-        <div style="font-weight:600;">رواتب الموظفين (أبريل)</div>
-        <div style="font-size:0.75rem; color:var(--sub);" class="date-display" data-h="27 شوال" data-m="27 April">27 شوال</div>
+    
+    <div class="ad-placeholder">مساحة إعلانية</div>
+
+    <div class="card" id="c1">
+        <span class="pin-btn" onclick="togglePin('c1')">📍</span>
+        <span class="tag">مالية</span>
+        <span class="card-title">رواتب الموظفين (أبريل)</span>
+        <span class="date-display" data-h="10 ذو القعدة" data-m="27 April">10 ذو القعدة</span>
         <div class="timer-grid">
-            <div class="unit"><span class="num" id="s-d">00</span><span class="label">يوم</span></div>
-            <div class="unit"><span class="num" id="s-h">00</span><span class="label">ساعة</span></div>
-            <div class="unit"><span class="num" id="s-m">00</span><span class="label">دقيقة</span></div>
+            <div class="unit"><span class="num" id="s1-d">00</span><span class="label">يوم</span></div>
+            <div class="unit"><span class="num" id="s1-h">00</span><span class="label">ساعة</span></div>
+            <div class="unit"><span class="num" id="s1-m">00</span><span class="label">دقيقة</span></div>
         </div>
-        <div class="card-actions">
-            <a href="#" class="cal-link" onclick="addToCalendar('راتب أبريل', '2026-04-27')">🗓 أضف للتقويم</a>
+        <div class="card-actions"><a href="#" class="cal-link" onclick="addToCal('الراتب', '2026-04-27')">🗓 حفظ الموعد</a></div>
+    </div>
+
+    <div class="card" id="c2">
+        <span class="pin-btn" onclick="togglePin('c2')">📍</span>
+        <span class="tag" style="background:rgba(16,185,129,0.1); color:var(--accent);">دعم</span>
+        <span class="card-title">إيداع حساب المواطن</span>
+        <span class="date-display" data-h="23 شوال" data-m="10 April">23 شوال</span>
+        <div class="timer-grid">
+            <div class="unit"><span class="num" id="c2-d">00</span><span class="label">يوم</span></div>
+            <div class="unit"><span class="num" id="c2-h">00</span><span class="label">ساعة</span></div>
+            <div class="unit"><span class="num" id="c2-m">00</span><span class="label">دقيقة</span></div>
+        </div>
+        <div class="card-actions"><a href="#" class="cal-link" onclick="addToCal('حساب المواطن', '2026-04-10')">🗓 حفظ الموعد</a></div>
+    </div>
+
+    <div class="card" id="c3">
+        <span class="pin-btn" onclick="togglePin('c3')">📍</span>
+        <span class="tag">تعليم</span>
+        <span class="card-title">مكافأة الطلاب الجامعيين</span>
+        <span class="date-display" data-h="09 شوال" data-m="26 April">09 شوال</span>
+        <div class="timer-grid">
+            <div class="unit"><span class="num" id="u3-d">00</span><span class="label">يوم</span></div>
+            <div class="unit"><span class="num" id="u3-h">00</span><span class="label">ساعة</span></div>
+            <div class="unit"><span class="num" id="u3-m">00</span><span class="label">دقيقة</span></div>
         </div>
     </div>
 
-    <div class="card" id="card-uni">
-        <span class="pin-btn" onclick="togglePin('card-uni')">📍</span>
-        <div style="font-weight:600;">مكافأة الطلاب الجامعيين</div>
-        <div style="font-size:0.75rem; color:var(--sub);" class="date-display" data-h="10 شوال" data-m="26 April">10 شوال</div>
+    <div class="ad-placeholder">مساحة إعلانية</div>
+
+    <div class="card" id="c4">
+        <span class="pin-btn" onclick="togglePin('c4')">📍</span>
+        <span class="tag" style="background:rgba(249,115,22,0.1); color:#f97316;">إجازات</span>
+        <span class="card-title">إجازة عيد الأضحى 1447هـ</span>
+        <span class="date-display" data-h="10 ذو الحجة" data-m="27 May">10 ذو الحجة</span>
         <div class="timer-grid">
-            <div class="unit"><span class="num" id="u-d">00</span><span class="label">يوم</span></div>
-            <div class="unit"><span class="num" id="u-h">00</span><span class="label">ساعة</span></div>
-            <div class="unit"><span class="num" id="u-m">00</span><span class="label">دقيقة</span></div>
-        </div>
-        <div class="card-actions">
-            <a href="#" class="cal-link" onclick="addToCalendar('مكافأة الجامعة', '2026-04-26')">🗓 أضف للتقويم</a>
+            <div class="unit"><span class="num" id="e4-d">00</span><span class="label">يوم</span></div>
+            <div class="unit"><span class="num" id="e4-h">00</span><span class="label">ساعة</span></div>
+            <div class="unit"><span class="num" id="e4-m">00</span><span class="label">دقيقة</span></div>
         </div>
     </div>
 
-    <div class="card" id="card-vac">
-        <span class="pin-btn" onclick="togglePin('card-vac')">📍</span>
-        <div style="font-weight:600;">أقرب إجازة مطولة</div>
-        <div style="font-size:0.75rem; color:var(--sub);" class="date-display" data-h="16 ذو القعدة" data-m="02 May">16 ذو القعدة</div>
+    <div class="card" id="c5">
+        <span class="pin-btn" onclick="togglePin('c5')">📍</span>
+        <span class="tag" style="background:rgba(5,150,105,0.1); color:#059669;">وطنية</span>
+        <span class="card-title">اليوم الوطني السعودي 96</span>
+        <span class="date-display" data-h="11 ربيع الأول" data-m="23 September">11 ربيع الأول</span>
         <div class="timer-grid">
-            <div class="unit"><span class="num" id="v-d">00</span><span class="label">يوم</span></div>
-            <div class="unit"><span class="num" id="v-h">00</span><span class="label">ساعة</span></div>
-            <div class="unit"><span class="num" id="v-m">00</span><span class="label">دقيقة</span></div>
+            <div class="unit"><span class="num" id="n5-d">00</span><span class="label">يوم</span></div>
+            <div class="unit"><span class="num" id="n5-h">00</span><span class="label">ساعة</span></div>
+            <div class="unit"><span class="num" id="n5-m">00</span><span class="label">دقيقة</span></div>
         </div>
     </div>
+
 </div>
 
 <footer>
-    <div style="margin-bottom:10px;">
-        <a href="#" style="color:var(--sub); text-decoration:none; margin:0 10px;">سياسة الخصوصية</a>
-        <a href="#" style="color:var(--sub); text-decoration:none; margin:0 10px;">اتصل بنا</a>
+    <div class="footer-links">
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">اتصل بنا</a>
+        <a href="#">من نحن</a>
     </div>
-    <p>© 2026 باقي. - جميع الحقوق محفوظة</p>
+    <p>© 2026 باقي. - جميع التواريخ دقيقة حسب تقويم أم القرى</p>
 </footer>
 
 <script>
-    // نظام الـ Dark Mode
     function toggleDark() { document.body.classList.toggle('dark-theme'); }
-
-    // تحويل التاريخ (هجري/ميلادي)
+    
     let isHijri = true;
     function toggleCalendarType() {
         isHijri = !isHijri;
-        document.getElementById('calTypeBtn').innerText = isHijri ? "تحويل للميلادي" : "تحويل للهجري";
+        document.getElementById('calTypeBtn').innerText = isHijri ? "📅 هجري" : "📅 ميلادي";
         document.querySelectorAll('.date-display').forEach(el => {
             el.innerText = isHijri ? el.dataset.h : el.dataset.m;
         });
     }
 
-    // ميزة التثبيت (Pin)
-    function togglePin(id) {
-        document.getElementById(id).classList.toggle('pinned');
-    }
+    function togglePin(id) { document.getElementById(id).classList.toggle('pinned'); }
 
-    // إضافة للتقويم (تفتح ملف تقويم بسيط)
-    function addToCalendar(title, date) {
-        const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${date.replace(/-/g, '')}/${date.replace(/-/g, '')}`;
+    function addToCal(t, d) {
+        const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(t)}&dates=${d.replace(/-/g,'')}/${d.replace(/-/g,'')}`;
         window.open(url, '_blank');
     }
 
-    // تشغيل العدادات
-    function setupTimer(idPrefix, dateStr) {
-        const target = new Date(dateStr).getTime();
+    function runTimer(id, target) {
+        const t = new Date(target).getTime();
         setInterval(() => {
             const now = new Date().getTime();
-            const diff = target - now;
+            const diff = t - now;
             if (diff < 0) return;
-            document.getElementById(idPrefix+'-d').innerText = Math.floor(diff / 86400000);
-            document.getElementById(idPrefix+'-h').innerText = Math.floor((diff % 86400000) / 3600000);
-            document.getElementById(idPrefix+'-m').innerText = Math.floor((diff % 3600000) / 60000);
+            document.getElementById(id+'-d').innerText = Math.floor(diff/86400000);
+            document.getElementById(id+'-h').innerText = Math.floor((diff%86400000)/3600000);
+            document.getElementById(id+'-m').innerText = Math.floor((diff%3600000)/60000);
         }, 1000);
     }
 
-    setupTimer('s', '2026-04-27');
-    setupTimer('u', '2026-04-26');
-    setupTimer('v', '2026-05-02');
+    // تشغيل العدادات بالتواريخ الصحيحة لعام 2026
+    runTimer('s1', '2026-04-27T00:00:00');
+    runTimer('c2', '2026-04-10T00:00:00');
+    runTimer('u3', '2026-04-26T00:00:00');
+    runTimer('e4', '2026-05-27T00:00:00');
+    runTimer('n5', '2026-09-23T00:00:00');
 </script>
 </body>
 </html>
